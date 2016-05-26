@@ -6,9 +6,9 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 public class JavaFileFormatter
 {
-
     private Scanner in;
     private PrintWriter output;
     public JavaFileFormatter(String fileIn, String fileOut)
@@ -42,6 +42,15 @@ public class JavaFileFormatter
         {
             String word = in.next();
             lineEnd = false;
+            if(word.equals("for"))
+            {
+                while(!word.equals("{"))
+                {
+                    output.print(word + " ");
+                    word = in.next();
+                }
+                lineEnd = true;
+            }
             if(word.equals("{"))
             {
                 output.println();
@@ -55,10 +64,6 @@ public class JavaFileFormatter
             }
             else if(word.equals("}"))
             {
-                for(int i = 0; i < indents - 1; i++)
-                {
-                    output.print("\b\b\b\b");
-                }
                 indents--;
                 output.print(word);
                 lineEnd = true;
@@ -74,9 +79,19 @@ public class JavaFileFormatter
             if(lineEnd)
             {
                 output.println();
-                for(int i = 0; i < indents; i++)
+                if(in.hasNext("}"))
                 {
-                    output.print("    ");
+                    for(int i = 0; i < indents - 1; i++)
+                    {
+                        output.print("    ");
+                    }
+                }
+                else
+                {
+                    for(int i = 0; i < indents; i++)
+                    {
+                        output.print("    ");
+                    }
                 }
             }
         }
