@@ -1,4 +1,3 @@
-
 /**
 *
 * @author Nathaniel McIntyre (Khila/Khila42)
@@ -56,8 +55,12 @@ public class JavaFileFormatter
             }
             else if(word.equals("}"))
             {
-                output.print("\n" + word);
+                for(int i = 0; i < indents - 1; i++)
+                {
+                    output.print("\b\b\b\b");
+                }
                 indents--;
+                output.print(word);
                 lineEnd = true;
             }
             else
